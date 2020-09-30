@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8126383716072074025}
   - component: {fileID: 8126383716058190733}
+  - component: {fileID: 6251830770318861296}
   m_Layer: 0
   m_Name: SM_Fox_01
   m_TagString: Untagged
@@ -83,6 +84,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000059604645, y: -0.029301882, z: 0.073896945}
     m_Extent: {x: 0.040517867, y: 0.104077205, z: 0.1580456}
   m_DirtyAABB: 0
+--- !u!65 &6251830770318861296
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8126383716071728165}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08103573, y: 0.20815443, z: 0.3160912}
+  m_Center: {x: -0.000000059604645, y: -0.029301867, z: 0.073896945}
 --- !u!1 &8126383716071731583
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +192,8 @@ GameObject:
   - component: {fileID: 8126383716062275885}
   - component: {fileID: 8126383715271282773}
   - component: {fileID: 9169529147297917441}
+  - component: {fileID: 8041474138974645274}
+  - component: {fileID: -7841963609846632749}
   m_Layer: 0
   m_Name: Fox
   m_TagString: Untagged
@@ -257,6 +273,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBound: 30
   lowerBound: -10
+--- !u!65 &8041474138974645274
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8126383716071734085}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08143779, y: 0.2066034, z: 0.31836435}
+  m_Center: {x: 0.003469652, y: 0.10246217, z: 0.014228058}
+--- !u!114 &-7841963609846632749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8126383716071734085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcb3812a29b24f5d8d6b4bcf8fee715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8126383716071774197
 GameObject:
   m_ObjectHideFlags: 0
