@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    private PlayerController playerControllerScript;
+    // Speed player moves per second
     public float speed = 30;
+
+    // Reference to players controller script
+    private PlayerController playerControllerScript;
+    // Bound on left to destroy obstacles
+    private float leftBound = -10f;
+
     // Start is called before the first frame update
     void Start()
     {
-        // Get a cop of the PlayerController script
+        // Get a copy of the PlayerController script
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -19,7 +25,12 @@ public class MoveLeft : MonoBehaviour
         // Move the player forward if the game is not over
         if (!playerControllerScript.gameOver)
         {
-        transform.Translate(Vector3.left * Time.deltaTime * speed);
+            transform.Translate(Vector3.left * Time.deltaTime * speed);
+        }
+        // Destroy Obstacles that have passed the left bound
+        if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);
         }
     }
 }
