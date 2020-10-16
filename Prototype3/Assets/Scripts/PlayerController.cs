@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public bool gameOver = false;
     public float jumpForce = 15f;
     public float gravityModifier = 3f;
-
+    
     // Sound Effects
     public AudioClip jumpSound;
     public AudioClip crashSound;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         // Get the reference to the dirt splatter Partice system
         dirtParticle = GameObject.Find("FX_DirtSplatter").GetComponent<ParticleSystem>();
         // Get the reference to the players audio source
-
+        playerAudio = GetComponent<AudioSource>();
 
         // Apply the gravity modifier
         Physics.gravity *= gravityModifier;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetTrigger("Jump_trig");
             // Stop dirt particles in the air
             dirtParticle.Stop();
-
+            playerAudio.PlayOneShot(jumpSound, 1f);
         }
     }
 
@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
             explosionParticle.Play();
             // Stop the dirt when the player dies
             dirtParticle.Stop();
+            playerAudio.PlayOneShot(crashSound, 1f);
         }
     }
 }
