@@ -10,17 +10,13 @@ public class PlayerController : MonoBehaviour
     private float playerSpeed = 15f;
     private float turnSpeed = 200f;
 
-    // Player Components
-    private CapsuleCollider playerCollider;
+    // TEMPORARY -- I will eventually make more formal boundaries however I plan on 
+    // adding camera controls as well as more formal boundaries later
+    private float playArea = 100f;
 
     // Player stats
     public float healthPoints = 100f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        playerCollider = GetComponent<CapsuleCollider>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -29,6 +25,12 @@ public class PlayerController : MonoBehaviour
         if (healthPoints < 0)
         {
             return;
+        }
+
+        // Player is going out of bounds
+        if (transform.position.x > playArea || transform.position.x < -playArea || transform.position.z > playArea || transform.position.z < -playArea)
+        {
+            healthPoints -= 100;
         }
 
         // TODO: Make the player point towards the mouse
