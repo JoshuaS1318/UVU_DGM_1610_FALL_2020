@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -8,7 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     // Movement variables
     private float playerSpeed = 15f;
-    private float turnSpeed = 200f;
+    // private float turnSpeed = 200f;
 
     // TEMPORARY -- I will eventually make more formal boundaries however I plan on 
     // adding camera controls as well as more formal boundaries later
@@ -33,16 +36,9 @@ public class PlayerController : MonoBehaviour
             healthPoints -= 100;
         }
 
-        // TODO: Make the player point towards the mouse
         // Turn the player
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.down * turnSpeed * Time.deltaTime);
-        }
+        RotateTowardsMouse();
+
 
         // Move the player forward
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
@@ -63,4 +59,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void RotateTowardsMouse()
+    {
+        // Get the world mouse position
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 30;
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector2 p1 = new Vector2(transform.position.x, transform.position.z);
+        Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
+
+        
+        float angle = (float)(Math.Atan2(Math.Abs(p1.y - p2.y), Math.Abs(p1.x - p2.x)) * (180 / Math.PI));
+
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
 }
