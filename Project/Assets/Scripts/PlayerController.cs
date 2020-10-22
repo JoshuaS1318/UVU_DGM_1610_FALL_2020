@@ -10,16 +10,25 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
-    private float playerSpeed = 15f;
-    // private float turnSpeed = 200f;
+    private float playerSpeed = 6f;
+
+    // TODO private float turnSpeed = 200f;
 
     // TEMPORARY -- I will eventually make more formal boundaries however I plan on 
-    // adding camera controls as well as more formal boundaries later
     private float playArea = 100f;
 
+    // Reference to players Rigidbody
+    private Rigidbody playerRigidbody;
     // Player stats
     public float healthPoints = 100f;
 
+    // Weapons
+    public GameObject lazerPrefab;
+
+    private void Start()
+    {
+        playerRigidbody = GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -39,11 +48,16 @@ public class PlayerController : MonoBehaviour
         // Turn the player
         RotateTowardsMouse();
 
-
         // Move the player forward
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (Input.GetMouseButton(1))
         {
-            transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
+            transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+        }
+
+        // Fire weapons
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(lazerPrefab, transform.position, transform.rotation);
         }
     }
 
@@ -70,7 +84,8 @@ public class PlayerController : MonoBehaviour
         Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
 
         
-        float angle = (float)(Math.Atan2(Math.Abs(p1.y - p2.y), Math.Abs(p1.x - p2.x)) * (180 / Math.PI));
+        float angle = (float)-(Math.Atan2(p1.y - p2.y, p1.x - p2.x) * (180 / Math.PI));
+        
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
