@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         // Player died and the game is over
         if (healthPoints < 0)
         {
-            return;
+            DeathSequence();
         }
 
         // Player is going out of bounds
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         // Move the player forward
         if (Input.GetMouseButton(1))
         {
-            transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
         }
 
         // Fire weapons
@@ -75,18 +75,28 @@ public class PlayerController : MonoBehaviour
 
     private void RotateTowardsMouse()
     {
+
         // Get the world mouse position
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 30;
+
+
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        Vector2 p1 = new Vector2(transform.position.x, transform.position.z);
-        Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
+        transform.LookAt(mousePos);
+
+        //Vector2 p1 = new Vector2(transform.position.x, transform.position.z);
+        //Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
 
         
-        float angle = (float)-(Math.Atan2(p1.y - p2.y, p1.x - p2.x) * (180 / Math.PI));
+        //float angle = (float)-(Math.Atan2(p1.y - p2.y, p1.x - p2.x) * (180 / Math.PI));
         
 
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        //transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+
+    private void DeathSequence()
+    {
+        gameObject.SetActive(false);
     }
 }

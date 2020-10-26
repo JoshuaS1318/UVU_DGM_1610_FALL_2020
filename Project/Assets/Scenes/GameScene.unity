@@ -1454,38 +1454,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191674816076490, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191676187784296, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: mousePointer
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3180191676187784296, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
-      propertyPath: lazerPrefab
-      value: 
-      objectReference: {fileID: 822480134087986645, guid: f1a02da0d103347de83b84aae75182db, type: 3}
     - target: {fileID: 3180191676187784302, guid: ce29b927b9fa0c1439f0b03c96ddcdec, type: 3}
       propertyPath: m_Name
       value: Spaceship

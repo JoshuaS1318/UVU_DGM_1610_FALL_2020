@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Lazer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Speed Lazers travel at
+    private float speed = 50;
+
+    private void Start()
     {
-        
+        StartCoroutine(DeleteAfterTime());
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+        // Move forward
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+    }
+
+    // Delete the lazer after 1 second
+    private IEnumerator DeleteAfterTime()
+    {
+        yield return new WaitForSeconds(1);
+
+        Destroy(gameObject);
     }
 }

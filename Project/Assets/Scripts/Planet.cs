@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Planet : MonoBehaviour
+public class Planet : WorldObject
 {
     // Rotation speed
     private float rotationSpeed = 2.0f;
