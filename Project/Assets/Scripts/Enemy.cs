@@ -10,13 +10,31 @@ public class Enemy : MonoBehaviour
     public float speed = 10;
     public bool attackMode = false;
 
+    public GameObject player;
+
+    private float attackRange = 10;
+    private float distanceToPlayer;
+
 
     void Update()
     {
+        transform.LookAt(player.transform, Vector3.left);
+
         if (healthPoints <= 0)
         {
             Death();
         }
+
+        // Search for the player
+        LookForPlayer();
+
+        // Attack the player if in range
+        if (attackMode)
+        {
+            AttackPlayer();
+        }
+
+        AttackPlayer();
     }
 
     public void Death()
@@ -37,9 +55,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // TODO
     private void LookForPlayer()
     {
-        
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        //Debug.Log(distanceToPlayer);
+
+        if (distanceToPlayer < attackRange)
+        {
+            Debug.Log("Attack");
+            attackMode = true;
+        }
+        else if (distanceToPlayer > attackRange * 2)
+        {
+            attackMode = false;
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        transform.LookAt(player.transform.position);
     }
 }
