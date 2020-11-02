@@ -10,7 +10,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
-    private float playerSpeed = 6f;
+    private float playerSpeed = 8f;
 
     // TODO private float turnSpeed = 200f;
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Player died and the game is over
-        if (healthPoints < 0)
+        if (healthPoints <= 0)
         {
             DeathSequence();
         }
@@ -71,6 +71,16 @@ public class PlayerController : MonoBehaviour
         {
             healthPoints -= 10;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("EnemyLazer"))
+        {
+            healthPoints -= 10;
+            Destroy(other.gameObject);
+        }
+        
     }
 
     private void RotateTowardsMouse()

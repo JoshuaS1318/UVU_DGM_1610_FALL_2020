@@ -2,27 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : WorldObject
 {
     // Enemy Stats
     public float healthPoints = 20;
     public float damage = 10;
-    public float speed = 10;
+    public float speed = 4;
     public bool attackMode = false;
 
-    public GameObject player;
+    public GameObject lazerPrefab;
 
+    private GameObject player;
+
+    // Weapons variables
     private float attackRange = 10;
-    private float distanceToPlayer;
+    private float attackCooldown = 5;
+    private bool canAttack = true;
 
+    // Following variables
+    private float distanceToPlayer;
+    private float followingDistance = 10;
+
+
+    private void Start()
+    {
+        // Get a reference to the player
+        player = GameObject.Find("Spaceship");
+    }
 
     void Update()
     {
-        transform.LookAt(player.transform, Vector3.left);
 
+        // If the enemy runs out of health kill it
         if (healthPoints <= 0)
         {
-            Death();
+            DeathSequence();
         }
 
         // Search for the player
@@ -33,13 +47,6 @@ public class Enemy : MonoBehaviour
         {
             AttackPlayer();
         }
-
-        AttackPlayer();
-    }
-
-    public void Death()
-    {
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,21 +65,57 @@ public class Enemy : MonoBehaviour
     private void LookForPlayer()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        //Debug.Log(distanceToPlayer);
 
+        // If the player is in the enemies range set mode to attack
         if (distanceToPlayer < attackRange)
         {
-            Debug.Log("Attack");
             attackMode = true;
         }
-        else if (distanceToPlayer > attackRange * 2)
+        // If the player is farther than double attack range stop attacking it
+        else if (distanceToPlayer > attackRange * 3)
         {
             attackMode = false;
         }
+
+        // BROKEN ///////////////////////////
+        // If the player dies stop the enemie attacking
+        if (!player.activeInHierarchy)
+        {
+            attackMode = false;
+        }
+        ////////////////////////////////////
     }
 
     private void AttackPlayer()
     {
+        // Look at the player
         transform.LookAt(player.transform.position);
+
+        // Move to attack range
+        if (distanceToPlayer > followingDistance)
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+        // attack if not on cooldown
+        if (canAttack)
+        {
+            StartCoroutine(AttackRoutine());
+        }
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        // Set the weapons to false
+        canAttack = false;
+
+        // Wait for the attack cooldown
+        yield return new WaitForSeconds(attackCooldown);
+
+        // Set canAttack back to true and attack if the player is still in range
+        if (distanceToPlayer < attackRange)
+        {
+            Instantiate(lazerPrefab, transform.position, transform.rotation);
+        }
+        canAttack = true;
     }
 }
