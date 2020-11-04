@@ -76,14 +76,6 @@ public class Enemy : WorldObject
         {
             attackMode = false;
         }
-
-        // BROKEN ///////////////////////////
-        // If the player dies stop the enemie attacking
-        if (!player.activeInHierarchy)
-        {
-            attackMode = false;
-        }
-        ////////////////////////////////////
     }
 
     private void AttackPlayer()

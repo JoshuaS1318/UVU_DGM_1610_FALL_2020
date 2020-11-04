@@ -14,16 +14,20 @@ public class PlayerController : MonoBehaviour
 
     // TODO private float turnSpeed = 200f;
 
-    // TEMPORARY -- I will eventually make more formal boundaries however I plan on 
-    private float playArea = 100f;
+
 
     // Reference to players Rigidbody
     private Rigidbody playerRigidbody;
     // Player stats
     public float healthPoints = 100f;
+    public float energy = 100f;
+    private float weaponCooldown = 1f;
+    private bool cooldown;
 
     // Weapons
     public GameObject lazerPrefab;
+
+
 
     private void Start()
     {
@@ -39,12 +43,6 @@ public class PlayerController : MonoBehaviour
             DeathSequence();
         }
 
-        // Player is going out of bounds
-        if (transform.position.x > playArea || transform.position.x < -playArea || transform.position.z > playArea || transform.position.z < -playArea)
-        {
-            healthPoints -= 100;
-        }
-
         // Turn the player
         RotateTowardsMouse();
 
@@ -55,10 +53,26 @@ public class PlayerController : MonoBehaviour
         }
 
         // Fire weapons
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && energy >= 0 && !cooldown)
         {
-            Instantiate(lazerPrefab, transform.position, transform.rotation);
+            StartCoroutine(WeaponRoutine());
         }
+    }
+
+    private IEnumerator WeaponRoutine()
+    {
+        // Decrease the energy of the spaceship and start the cooldown
+        energy -= 5;
+        cooldown = true;
+
+        // Spawn the Lazer
+        Instantiate(lazerPrefab, transform.position, transform.rotation);
+
+        yield return new WaitForSeconds(weaponCooldown);
+
+        // End the cooldown
+        cooldown = false;
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,10 +91,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("EnemyLazer"))
         {
-            healthPoints -= 10;
             Destroy(other.gameObject);
+            healthPoints -= 10;
         }
-        
     }
 
     private void RotateTowardsMouse()
@@ -93,16 +106,17 @@ public class PlayerController : MonoBehaviour
 
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        transform.LookAt(mousePos);
+        //transform.LookAt(mousePos);
 
-        //Vector2 p1 = new Vector2(transform.position.x, transform.position.z);
-        //Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
+        Debug.Log(Vector3.Angle(transform.position, mousePos));
+
+        Vector3 targetDir = mousePos - transform.position;
+        float angle = Vector3.Angle(targetDir, transform.forward);
 
         
-        //float angle = (float)-(Math.Atan2(p1.y - p2.y, p1.x - p2.x) * (180 / Math.PI));
-        
+        print(angle);
 
-        //transform.rotation = Quaternion.Euler(0, angle, 0);
+
     }
 
     private void DeathSequence()
