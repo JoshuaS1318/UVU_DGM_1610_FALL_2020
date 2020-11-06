@@ -43,8 +43,7 @@ public class PlayerController : MonoBehaviour
             DeathSequence();
         }
 
-        // Turn the player
-        RotateTowardsMouse();
+
 
         // Move the player forward
         if (Input.GetMouseButton(1))
@@ -57,6 +56,12 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(WeaponRoutine());
         }
+    }
+
+    private void FixedUpdate()
+    {
+        // Turn the player
+        RotateTowardsMouse();
     }
 
     private IEnumerator WeaponRoutine()
@@ -115,7 +120,8 @@ public class PlayerController : MonoBehaviour
 
         
         print(angle);
-
+        //transform.Rotate(new Vector3(0, angle, 0));
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, angle, 0)), 1);
 
     }
 
