@@ -18,7 +18,7 @@ public class GameManagerX : MonoBehaviour
     private int score;
     private float spawnRate = 1.5f;
     public bool isGameActive;
-    public int gameTime = 2;
+    private int gameTime = 60;
 
     private float spaceBetweenSquares = 2.5f; 
     private float minValueX = -3.75f; //  x value of the center of the left-most square
