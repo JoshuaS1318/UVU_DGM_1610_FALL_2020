@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         // Move the player forward
         if (Input.GetMouseButton(1))
         {
-            transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
+            transform.Translate(Vector3.down * playerSpeed * Time.deltaTime);
         }
 
         // Fire weapons
@@ -106,22 +106,13 @@ public class PlayerController : MonoBehaviour
 
         // Get the world mouse position
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 30;
-
+        mousePos.z = 20;
 
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        //transform.LookAt(mousePos);
+        Debug.Log(mousePos);
 
-        Debug.Log(Vector3.Angle(transform.position, mousePos));
-
-        Vector3 targetDir = mousePos - transform.position;
-        float angle = Vector3.Angle(targetDir, transform.forward);
-
-        
-        print(angle);
-        //transform.Rotate(new Vector3(0, angle, 0));
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, angle, 0)), 1);
+        transform.LookAt(mousePos);
 
     }
 
