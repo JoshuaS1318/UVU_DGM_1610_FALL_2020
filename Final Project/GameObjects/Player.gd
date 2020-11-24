@@ -9,12 +9,12 @@ func _ready():
 	pass
 
 	
-func _physics_process(delta):
-	get_input(delta)
+func _physics_process(_delta):
+	get_input()
 	velocity = move_and_slide(velocity)
 
 # Handle the inputs for the player
-func get_input(delta):
+func get_input():
 	# Look at the mouse
 	var dir = get_angle_to(get_global_mouse_position())
 	
