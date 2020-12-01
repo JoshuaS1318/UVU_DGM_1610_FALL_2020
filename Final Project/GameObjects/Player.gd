@@ -3,14 +3,21 @@ extends KinematicBody2D
 export (float) var speed = 300
 export (float) var rotation_speed = 20
 
+# Players velocity
 var velocity = Vector2()
+# Players lazer weapon
+var lazer
+# Player weapon cooldown
+var cooldown = false
 
 func _ready():
-	pass
+	# Load the lazer scene so you can instance it later
+	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
 
-	
 func _physics_process(_delta):
+	# Handle player input
 	get_input()
+	# Move the player
 	velocity = move_and_slide(velocity)
 
 # Handle the inputs for the player
@@ -31,4 +38,24 @@ func get_input():
 		# stop moving
 		velocity = Vector2(0, 0)
 
+	# Fire the weapon if the player hits a fire weapon button
+	if Input.is_action_pressed("fire_weapon") and cooldown == false:
+		fire_weapon()
+
+func fire_weapon():
+	# Get a lazer instance
+	var weapon = lazer.instance()
+	# Set the lazer the the players position
+	weapon.position = position
+	weapon.rotation = rotation
+	weapon.add_to_group("PlayerLazer")
+	# Add the lazer to the scene
+	get_parent().add_child(weapon)
+	
+	# Start cooldown
+	cooldown = true
+	$Timer.start()
+
+func _on_Timer_timeout():
+	cooldown = false
 
