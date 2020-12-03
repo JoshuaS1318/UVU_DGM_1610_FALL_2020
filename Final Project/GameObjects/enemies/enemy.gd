@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+export (int) var health = 20
 var player_in_range = false
 var player
 var vision_range = 500
@@ -11,7 +12,11 @@ var lazer
 
 func _ready():
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
-	
+
+func _process(delta):
+	if health <= 0:
+		death()
+
 func _physics_process(_delta):
 	if player_in_range:
 		attack_player()
@@ -32,12 +37,15 @@ func attack_player():
 		if dir < 0: rotation -= rotation_speed
 
 	# Move towards the player
-	if position.distance_to(player.position) > 40:
-		velocity = Vector2(speed, 0).rotated(rotation)
+	velocity = Vector2(speed, 0).rotated(rotation)
+	
+	if global_position.distance_to(player.position) < 50:
+		velocity = Vector2(0, 0)
 
 	# Lose interest if the player runs away
 	if position.distance_to(player.position) > vision_range * 1.5:
 		player_in_range = false
+		velocity = Vector2(0, 0)
 
 	if cooldown == false:
 		fire_weapon()
@@ -71,3 +79,11 @@ func fire_weapon():
 	# Start cooldown
 	cooldown = true
 	$CoolDownTimer.start()
+
+func death():
+	queue_free()
+
+func hit(weapon):
+	if weapon.is_in_group("PlayerLazer"):
+		health -= 10
+		weapon.queue_free()

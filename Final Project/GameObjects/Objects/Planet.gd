@@ -8,7 +8,8 @@ var rotation_speed = 0.3;
 func _ready():
 	pass # Replace with function body.
 
-
-
 func _process(delta):
 	rotate(rotation_speed * delta)
+
+func hit(weapon):	
+	weapon.queue_free()

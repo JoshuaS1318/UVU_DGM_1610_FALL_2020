@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export (float) var speed = 300
 export (float) var rotation_speed = 20
+export (int) var health = 100
 
 # Players velocity
 var velocity = Vector2()
@@ -13,6 +14,10 @@ var cooldown = false
 func _ready():
 	# Load the lazer scene so you can instance it later
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
+
+func _process(delta):
+	if health <= 0:
+		death()
 
 func _physics_process(_delta):
 	# Handle player input
@@ -59,3 +64,10 @@ func fire_weapon():
 func _on_Timer_timeout():
 	cooldown = false
 
+func hit(weapon):
+	if weapon.is_in_group("EnemyLazer"):
+		health -= 10
+		weapon.queue_free()
+
+func death():
+	visible = false

@@ -11,3 +11,7 @@ func _physics_process(delta):
 
 func _on_Timer_timeout():
 	queue_free()
+	
+func _hit(body):
+	if body.has_method("hit"):
+		body.hit(self)
