@@ -13,7 +13,7 @@ var lazer
 func _ready():
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
 
-func _process(delta):
+func _process(_delta):
 	if health <= 0:
 		death()
 
@@ -38,8 +38,8 @@ func attack_player():
 
 	# Move towards the player
 	velocity = Vector2(speed, 0).rotated(rotation)
-	
-	if global_position.distance_to(player.position) < 50:
+
+	if global_position.distance_to(player.position) < 200:
 		velocity = Vector2(0, 0)
 
 	# Lose interest if the player runs away

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export (float) var speed = 300
+export (float) var speed = 400
 export (float) var rotation_speed = 20
 export (int) var health = 100
 
@@ -15,7 +15,7 @@ func _ready():
 	# Load the lazer scene so you can instance it later
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
 
-func _process(delta):
+func _process(_delta):
 	if health <= 0:
 		death()
 
