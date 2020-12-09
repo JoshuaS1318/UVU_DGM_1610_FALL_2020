@@ -71,3 +71,4 @@ func hit(weapon):
 
 func death():
 	visible = false
+	var _err = get_tree().change_scene("res://UIScenes/GameOverScene.tscn")
