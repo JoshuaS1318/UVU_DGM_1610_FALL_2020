@@ -1,0 +1,16 @@
+[gd_scene format=2]
+
+[node name="Overlay" type="Control"]
+margin_left = -1550.0
+margin_top = -900.0
+margin_right = 1550.0
+margin_bottom = 900.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_left = 51.1532
+margin_top = 29.0799
+margin_right = 612.153
+margin_bottom = 88.0799

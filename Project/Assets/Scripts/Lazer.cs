@@ -5,7 +5,7 @@ using UnityEngine;
 public class Lazer : MonoBehaviour
 {
     // Speed Lazers travel at
-    private float speed = 50;
+    public float speed = 50;
 
     private void Start()
     {

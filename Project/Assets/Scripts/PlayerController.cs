@@ -10,20 +10,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
-    private float playerSpeed = 6f;
+    private float playerSpeed = 8f;
 
     // TODO private float turnSpeed = 200f;
 
-    // TEMPORARY -- I will eventually make more formal boundaries however I plan on 
-    private float playArea = 100f;
+
 
     // Reference to players Rigidbody
     private Rigidbody playerRigidbody;
     // Player stats
     public float healthPoints = 100f;
+    public float energy = 100f;
+    private float weaponCooldown = 1f;
+    private bool cooldown;
 
     // Weapons
     public GameObject lazerPrefab;
+
+
 
     private void Start()
     {
@@ -34,31 +38,46 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Player died and the game is over
-        if (healthPoints < 0)
+        if (healthPoints <= 0)
         {
             DeathSequence();
         }
 
-        // Player is going out of bounds
-        if (transform.position.x > playArea || transform.position.x < -playArea || transform.position.z > playArea || transform.position.z < -playArea)
-        {
-            healthPoints -= 100;
-        }
 
-        // Turn the player
-        RotateTowardsMouse();
 
         // Move the player forward
         if (Input.GetMouseButton(1))
         {
-            transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
+            transform.Translate(Vector3.down * playerSpeed * Time.deltaTime);
         }
 
         // Fire weapons
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && energy >= 0 && !cooldown)
         {
-            Instantiate(lazerPrefab, transform.position, transform.rotation);
+            StartCoroutine(WeaponRoutine());
         }
+    }
+
+    private void FixedUpdate()
+    {
+        // Turn the player
+        RotateTowardsMouse();
+    }
+
+    private IEnumerator WeaponRoutine()
+    {
+        // Decrease the energy of the spaceship and start the cooldown
+        energy -= 5;
+        cooldown = true;
+
+        // Spawn the Lazer
+        Instantiate(lazerPrefab, transform.position, transform.rotation);
+
+        yield return new WaitForSeconds(weaponCooldown);
+
+        // End the cooldown
+        cooldown = false;
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -73,26 +92,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("EnemyLazer"))
+        {
+            Destroy(other.gameObject);
+            healthPoints -= 10;
+        }
+    }
+
     private void RotateTowardsMouse()
     {
 
         // Get the world mouse position
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 30;
-
+        mousePos.z = 20;
 
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
+        Debug.Log(mousePos);
+
         transform.LookAt(mousePos);
 
-        //Vector2 p1 = new Vector2(transform.position.x, transform.position.z);
-        //Vector2 p2 = new Vector2(mousePos.x, mousePos.z);
-
-        
-        //float angle = (float)-(Math.Atan2(p1.y - p2.y, p1.x - p2.x) * (180 / Math.PI));
-        
-
-        //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     private void DeathSequence()

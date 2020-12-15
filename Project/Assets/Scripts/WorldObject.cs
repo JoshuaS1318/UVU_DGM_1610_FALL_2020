@@ -17,12 +17,22 @@ public class WorldObject : MonoBehaviour
         
     }
 
-    // Destroy lazers that hit this object
+    // handle collisions
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Lazer"))
         {
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("EnemyLazer"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
+    // Destroy self
+    public void DeathSequence()
+    {
+        gameObject.SetActive(false);
     }
 }

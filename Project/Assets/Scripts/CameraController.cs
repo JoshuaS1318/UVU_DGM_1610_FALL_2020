@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public GameObject player;
 
     // Provide camera offset
-    private Vector3 cameraOffset = new Vector3(0, 30, 0);
+    private Vector3 cameraOffset = new Vector3(0, 0, -20);
 
     // Update is called once per frame
     void Update()
