@@ -11,5 +11,5 @@ func _ready():
 func _process(delta):
 	rotate(rotation_speed * delta)
 
-func hit(weapon):	
+func hit(weapon):
 	weapon.queue_free()
