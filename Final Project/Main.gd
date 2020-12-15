@@ -3,7 +3,7 @@ extends Node2D
 var world_width = 10
 var world_height = 10
 
-var cell_width = 1000
+var cell_width = 2000
 #var world_objects = {
 #	-1: "player",
 #	0: "none",
@@ -33,8 +33,8 @@ func build_galaxy(map):
 	for line in map:
 		print(line)
 
-	for y in range(world_height-1):
-		for x in range(world_width-1):
+	for y in range(world_height):
+		for x in range(world_width):
 			match world[y][x]:
 				-1:
 					print("placing player at (" + str(x) + ", " + str(y) + ")")
@@ -71,8 +71,12 @@ func build_galaxy_map():
 	return world
 
 func new_planet(x, y):
+	# Create a planet object
 	var object = planet.instance()
-	object.position = get_cell_pos(x, y)
+	# Get the position for the cell for the planet
+	var cell_pos = get_cell_pos(x, y)
+	# get the size of the object
+	var size = object.get_node("Sprite").texture.get_size()
 	object.get_node("Sprite").modulate = Color(rng.randf_range(0, 1), rng.randf_range(0, 1), rng.randf_range(0, 1))
 	add_child(object)
 	
