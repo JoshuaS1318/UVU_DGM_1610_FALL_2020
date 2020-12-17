@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export (float) var speed = 400
 export (float) var rotation_speed = 20
-export (int) var health = 100
+export (float) var health = 100
 
 # Players velocity
 var velocity = Vector2()
@@ -11,14 +11,20 @@ var lazer
 # Player weapon cooldown
 var cooldown = false
 
+var in_bounds = true
+
 func _ready():
-	print(position)
 	# Load the lazer scene so you can instance it later
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
+	$FireTrail.
 
-func _process(_delta):
+func _process(delta):
 	if health <= 0:
 		death()
+	
+	if not in_bounds:
+		print(health)
+		health -= 10 * delta
 
 func _physics_process(_delta):
 	# Handle player input
@@ -73,3 +79,9 @@ func hit(weapon):
 func death():
 	visible = false
 	var _err = get_tree().change_scene("res://UIScenes/GameOverScene.tscn")
+
+func _on_Player_player_in_bounds():
+	in_bounds = true
+
+func _on_Player_player_out_of_bounds():
+	in_bounds = false
