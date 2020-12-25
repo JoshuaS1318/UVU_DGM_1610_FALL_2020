@@ -3,7 +3,7 @@ extends KinematicBody2D
 export (int) var health = 20
 var player_in_range = false
 var player
-var vision_range = 500
+var vision_range = 750
 var rotation_speed = 20
 var speed = 200
 var velocity = Vector2()
@@ -39,7 +39,7 @@ func attack_player():
 	# Move towards the player
 	velocity = Vector2(speed, 0).rotated(rotation)
 
-	if global_position.distance_to(player.position) < 200:
+	if global_position.distance_to(player.position) < 400:
 		velocity = Vector2(0, 0)
 
 	# Lose interest if the player runs away
@@ -85,5 +85,12 @@ func death():
 
 func hit(weapon):
 	if weapon.is_in_group("PlayerLazer"):
+		if player:
+			player_in_range = true
+		else:
+			player = get_node_or_null("../Player")
+			if player:
+				player_in_range = true
+
 		health -= 10
 		weapon.queue_free()
