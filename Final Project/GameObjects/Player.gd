@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-export (float) var speed = 400
-export (float) var rotation_speed = 20
-export (float) var health = 100
+export (float) var speed
+export (float) var rotation_speed
+export (float) var health
 
 # Players velocity
 var velocity = Vector2()
@@ -14,9 +14,13 @@ var cooldown = false
 var in_bounds = true
 
 func _ready():
+	speed = 400
+	rotation_speed = 20
+	health = 100
+	
 	# Load the lazer scene so you can instance it later
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
-	$FireTrail.
+	$FireTrail.set_emitting(false)
 
 func _process(delta):
 	if health <= 0:
@@ -45,8 +49,12 @@ func get_input():
 
 	# If one of the actions under forward is pressed move forward
 	if Input.is_action_pressed('forward'):
+		$FireTrail.set_emitting(true)
+		
 		velocity = Vector2(speed, 0).rotated(rotation)
 	else:
+		$FireTrail.set_emitting(false)
+		
 		# stop moving
 		velocity = Vector2(0, 0)
 
@@ -63,7 +71,7 @@ func fire_weapon():
 	weapon.add_to_group("PlayerLazer")
 	# Add the lazer to the scene
 	get_parent().add_child(weapon)
-	
+
 	# Start cooldown
 	cooldown = true
 	$Timer.start()
