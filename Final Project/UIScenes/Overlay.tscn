@@ -7,10 +7,10 @@ follow_viewport_enable = true
 script = ExtResource( 1 )
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-margin_left = 51.1532
-margin_top = 29.0799
-margin_right = 612.153
-margin_bottom = 88.0799
+margin_left = -252.716
+margin_top = -194.791
+margin_right = 97.2843
+margin_bottom = -161.791
 __meta__ = {
 "_edit_use_anchors_": false
 }
