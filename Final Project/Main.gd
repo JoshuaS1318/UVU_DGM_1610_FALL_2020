@@ -1,7 +1,7 @@
 extends Node2D
 
-var world_width = 10
-var world_height = 10
+var world_width = 30
+var world_height = 30
 
 var cell_width = 1500
 #var world_objects = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://GameObjects/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/spaceship.png" type="Texture" id=2]
@@ -6,35 +6,41 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 63.7693, 63.9323 )
 
-[sub_resource type="CurveTexture" id=3]
+[sub_resource type="Curve" id=2]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
 min_value = -360.0
 max_value = 360.0
 _data = [ Vector2( 0, 97.2973 ), 0.0, 0.0, 0, 0, Vector2( 1, -64.8648 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=6]
-curve = SubResource( 5 )
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=6]
 colors = PoolColorArray( 1, 0.276074, 0.276074, 1, 1, 0.210634, 0.210634, 1 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=8]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.997851, 0.486487 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
 
-[sub_resource type="ParticlesMaterial" id=4]
+[sub_resource type="ParticlesMaterial" id=10]
 flag_disable_z = true
 direction = Vector3( -1, 0, 0 )
 spread = 30.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 40.0
-angular_velocity_curve = SubResource( 6 )
+angular_velocity_curve = SubResource( 5 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = 50.0
@@ -42,16 +48,13 @@ angle = 180.0
 angle_random = 1.0
 angle_curve = SubResource( 3 )
 scale = 10.0
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 10 )
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 script = ExtResource( 1 )
-speed = null
-rotation_speed = null
-health = null
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 8, 8 )
@@ -70,5 +73,8 @@ wait_time = 0.5
 
 [node name="FireTrail" type="Particles2D" parent="."]
 position = Vector2( -50, 0 )
-process_material = SubResource( 4 )
+lifetime = 0.25
+speed_scale = 4.0
+local_coords = false
+process_material = SubResource( 10 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
