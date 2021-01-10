@@ -1,11 +1,12 @@
 extends KinematicBody2D
 
-export (float) var speed = 400
-export (float) var rotation_speed = 20
-export (float) var health = 100
+var speed = 400
+var rotation_speed = 20
+var health = 100
+
 
 # Players velocity
-var velocity = Vector2()
+var velocity = Vector2() 
 # Players lazer weapon
 var lazer
 # Player weapon cooldown
@@ -16,14 +17,12 @@ var in_bounds = true
 func _ready():
 	# Load the lazer scene so you can instance it later
 	lazer = preload("res://GameObjects/Weapons/lazer.tscn")
-	$FireTrail.
 
 func _process(delta):
 	if health <= 0:
 		death()
 	
 	if not in_bounds:
-		print(health)
 		health -= 10 * delta
 
 func _physics_process(_delta):
@@ -36,7 +35,6 @@ func _physics_process(_delta):
 func get_input():
 	# Look at the mouse
 	var dir = get_angle_to(get_global_mouse_position())
-	
 	if abs(dir) < rotation_speed:
 		rotation += dir
 	else:
