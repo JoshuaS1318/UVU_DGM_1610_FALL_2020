@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UIScenes/GameOverScene.gd" type="Script" id=1]
+[ext_resource path="res://JetBrainsMono-VariableFont_wght.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 2 )
 
 [node name="GameOverScene" type="Control"]
 anchor_right = 1.0
@@ -11,10 +24,12 @@ __meta__ = {
 }
 
 [node name="GameOverText" type="Label" parent="."]
-margin_left = 300.0
-margin_top = 150.0
-margin_right = 700.0
-margin_bottom = 300.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_right = 200.0
+margin_bottom = 150.0
+custom_fonts/font = SubResource( 1 )
 text = "Game Over
 "
 align = 1
@@ -23,10 +38,41 @@ __meta__ = {
 }
 
 [node name="Score" type="Label" parent="."]
-margin_left = 400.0
-margin_top = 280.0
-margin_right = 600.0
-margin_bottom = 350.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -35.0
+margin_right = 100.0
+margin_bottom = 35.0
+custom_fonts/font = SubResource( 2 )
 text = "Score: 0
 "
 align = 1
+
+[node name="PlayAgainButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.0
+margin_top = 60.0
+margin_right = 101.0
+margin_bottom = 24.5
+custom_fonts/font = SubResource( 3 )
+text = "Play Again"
+
+[node name="New Galaxy" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.0
+margin_top = 120.0
+margin_right = 101.0
+margin_bottom = 24.5
+custom_fonts/font = SubResource( 3 )
+text = "New Galaxy"
+[connection signal="pressed" from="PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]
+[connection signal="pressed" from="New Galaxy" to="." method="_on_New_Galaxy_pressed"]

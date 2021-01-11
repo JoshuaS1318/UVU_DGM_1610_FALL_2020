@@ -6,11 +6,11 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 74.8456
 
-[node name="Node2D" type="KinematicBody2D"]
+[node name="Planet" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
 script = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

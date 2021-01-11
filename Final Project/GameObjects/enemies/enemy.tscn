@@ -32,6 +32,6 @@ shape = SubResource( 1 )
 [node name="VisionRange" type="CollisionShape2D" parent="Vision"]
 shape = SubResource( 2 )
 
-[node name="CoolDownTimer" type="Timer" parent="."]
+[node name="CooldownTimer" type="Timer" parent="."]
 [connection signal="body_entered" from="Vision" to="." method="_found_player"]
-[connection signal="timeout" from="CoolDownTimer" to="." method="_on_CoolDownTimer_timeout"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_CoolDownTimer_timeout"]
